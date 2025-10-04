@@ -1,0 +1,93 @@
+# =========================
+# Android / Kotlin project
+# =========================
+
+# Gradle
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration
+local.properties
+*.iml
+
+# Android Studio
+.idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/deploymentTargetDropDown.xml
+.idea/kotlinc.xml
+.idea/runConfigurations.xml
+.idea/sqlDataSources.xml
+.idea/inspectionProfiles/
+.idea/httpRequests/
+.idea/sonarlint/
+
+# Keystore files (⚠️ nunca subir para o Git)
+*.jks
+*.keystore
+
+# Logs
+*.log
+
+# Capturas de tela e builds externos
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Saídas de build
+*.apk
+*.aab
+*.ap_
+output.json
+
+# Diretórios comuns de build
+app/release/
+app/debug/
+build/
+out/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Jetpack Compose cache
+.compose-cache/
+
+# Gradle wrapper
+gradle-app.setting
+gradle-app.properties
+gradle/wrapper/gradle-wrapper.properties
+
+# Arquivos gerados
+generated/
+*.hprof
+
+# Firebase / Crashlytics
+fabric.properties
+crashlytics-build.properties
+app/google-services.json
+
+# Kotlin specific
+.kotlin/
+*.kotlin_metadata
+*.kotlin_module
+*.kotlin_builtins
+
+# IntelliJ
+out/
+
+# Misc
+*.swp
+*.swo
+
