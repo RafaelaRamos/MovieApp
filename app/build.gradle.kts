@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "br.edu.scl.sdm.moviesmanager"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "br.edu.scl.sdm.moviesmanager"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -48,6 +48,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.room:room-runtime:2.6.0")
     annotationProcessor("androidx.room:room-compiler:2.6.0")
+    implementation ("androidx.activity:activity:1.8.2")
+    implementation ("androidx.core:core:1.12.0")
+    implementation ("androidx.core:core-ktx:1.12.0")
 
 
 }
