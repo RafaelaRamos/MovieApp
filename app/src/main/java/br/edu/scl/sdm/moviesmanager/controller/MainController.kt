@@ -25,7 +25,7 @@ class MainController(private val mainFragment: MainFragment) {
     fun getMovies() {
         CoroutineScope(Dispatchers.IO).launch {
           val movie =  movieDaoImpl.retrieveMovie()
-           // mainFragment.updateMovieList(movie)
+            mainFragment.updateMovieList(movie)
         }
     }
 
