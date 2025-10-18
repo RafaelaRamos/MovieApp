@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviesManager</string>
+    <string name="app_name">MoviesApp</string>
     <string name="filme">filme</string>
     <string name="add_movie">add_movie</string>
     <string name="movie">movie</string>
