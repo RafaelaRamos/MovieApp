@@ -82,18 +82,14 @@ class MainFragment : Fragment(), OnMovieClickListener {
         fmb.movieRv.adapter = movieAdapter
 
         fmb.addMovieFab.setOnClickListener {
-            navController.navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(null, false))
+            navController.navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(null, true))
         }
 
         return fmb.root
     }
 
-    override fun onMovieClick(position: Int) {
-        val movie = movieList[position]
-        navController.navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(movie, false))
-    }
 
-    override fun onMovieLongClick(position: Int, view: View) {
+    override fun onMovieClick(position: Int, view: View) {
         val movie = movieList[position]
         val popup = PopupMenu(requireContext(), view)
         popup.menuInflater.inflate(R.menu.menu_tile, popup.menu)
@@ -106,7 +102,7 @@ class MainFragment : Fragment(), OnMovieClickListener {
                     true
                 }
                 R.id.details -> {
-                    navController.navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(movie, true))
+                    findNavController().navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(movie, false))
                     true
                 }
                 else -> false

@@ -9,18 +9,24 @@
     <string name="str">\@str</string>
     <string name="unwatched">Unwatched</string>
     <string name="year">Year</string>
-    <string name="por_favor_preencha_o_nome_do_filme">Por favor, preencha o nome do filme</string>
-    <string name="remove_movie">remove movie</string>
+    <string name="require_movie_name">Please fill in the name of the movie</string>
+    <string name="remove_movie">Remove movie</string>
     <string name="details">Details</string>
+    <string name="edit_move">edit move</string>
+    <string name="minutes">Minutes</string>
+    <string name="name">Name</string>
+    <string name="studio">Studio</string>
+    <string name="score">Score</string>
+    <string name="add_information_about_the_movie">Information about the movie</string>
 
-    <string-array name="generos">
+    <string-array name="genre">
         <item>Genre</item>
-        <item>Ação</item>
-        <item>Comédia</item>
+        <item>Action</item>
+        <item>Comedy</item>
         <item>Drama</item>
-        <item>Terror</item>
+        <item>Horror</item>
         <item>Romance</item>
-        <item>Ficção Científica</item>
-        <item>Suspense</item>
+        <item>Science Fiction</item>
+        <item>Thriller</item>
     </string-array>
 </resources>

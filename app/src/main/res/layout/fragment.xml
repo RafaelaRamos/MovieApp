@@ -4,47 +4,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MovieFragment">
+    tools:context=".view.MovieFragment"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
-
+    <TextView
+        android:id="@+id/infoLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:text="@string/add_information_about_the_movie"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
     <EditText
         android:id="@+id/nameEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
 
 
     <EditText
         android:id="@+id/studioEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Studio"
+        android:autofillHints=""
+        android:hint="@string/studio"
         android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/nameEt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
     <EditText
         android:id="@+id/minutesEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Minutes"
+        android:autofillHints=""
+        android:hint="@string/minutes"
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@id/studioEt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <EditText
-        android:id="@+id/scoreEt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Score"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/minutesEt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -53,10 +61,12 @@
         android:id="@+id/yearEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:hint="@string/year"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/scoreEt"
+        app:layout_constraintTop_toBottomOf="@id/minutesEt"
         app:layout_constraintStart_toStartOf="parent"
+        android:maxLength="4"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Spinner
@@ -68,22 +78,56 @@
         app:layout_constraintTop_toBottomOf="@id/yearEt"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/spiner_border"/>
+    <TextView
+        android:id="@+id/scoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/genreEt"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+    <RatingBar
+        android:id="@+id/scoreRb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/scoreLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:progressTint="@color/colorPrimary"/>
 
     <CheckBox
         android:id="@+id/watchedEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/watched"
-        app:layout_constraintTop_toBottomOf="@id/genreEt"
+        app:layout_constraintTop_toBottomOf="@id/scoreRb"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/saveBt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/save_movie"
         app:layout_constraintTop_toBottomOf="@id/watchedEt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone" />
+    <Button
+        android:id="@+id/editBt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_move"
+        app:layout_constraintTop_toBottomOf="@id/watchedEt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

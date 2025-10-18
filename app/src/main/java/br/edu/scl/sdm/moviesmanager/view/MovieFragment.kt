@@ -15,10 +15,9 @@ import androidx.navigation.fragment.navArgs
 import br.edu.scl.sdm.moviesmanager.R
 import br.edu.scl.sdm.moviesmanager.databinding.FragmentBinding
 import br.edu.scl.sdm.moviesmanager.model.entity.Movie
-import br.edu.scl.sdm.moviesmanager.view.MainFragment.Companion.EXTRA_MOVIE
-import br.edu.scl.sdm.moviesmanager.view.MainFragment.Companion.MOVIE_FRAGMENT_REQUEST_KEY
 
 class MovieFragment : Fragment() {
+
     private lateinit var fmb: FragmentBinding
     private val navigationArgs: MovieFragmentArgs by navArgs()
 
@@ -27,61 +26,86 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         fmb = FragmentBinding.inflate(inflater, container, false)
+
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.generos,
+            R.array.genre,
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         fmb.genreEt.adapter = adapter
+
         val receivedMovie = navigationArgs.movie
-        receivedMovie?.also { movie ->
+        val isEditMode = navigationArgs.editMovie
+
+        if (receivedMovie != null) {
             with(fmb) {
-                nameEt.setText(movie.name)
-                yearEt.setText(movie.year.toString())
-                studioEt.setText(movie.studio)
-                minutesEt.setText(movie.minutes.toString())
-                scoreEt.setText(movie.score.toString())
-               // genreEt.setText(movie.genre)
-                navigationArgs.editMovie.also { editMovie ->
-                    nameEt.isEnabled = editMovie
-                    saveBt.visibility = if (editMovie) VISIBLE else GONE
-                }
+                nameEt.setText(receivedMovie.name)
+                yearEt.setText(receivedMovie.year.toString())
+                studioEt.setText(receivedMovie.studio)
+                minutesEt.setText(receivedMovie.minutes.toString())
+                scoreRb.rating = receivedMovie.score?.toFloat() ?: 0f
+                watchedEt.isChecked = receivedMovie.watched
+
+                val position = adapter.getPosition(receivedMovie.genre)
+                genreEt.setSelection(position)
             }
         }
 
-        fmb.run {
-            saveBt.setOnClickListener {
-                val generaSelection = genreEt.selectedItem.toString()
-                if (generaSelection == getString(R.string.genre) ) {
-                    Toast.makeText(requireContext(),
-                      "Select a valid genre", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                val name = nameEt.text.toString()
-                if (name.isEmpty()) {
-                    Toast.makeText(requireContext(),
-                        getString(R.string.por_favor_preencha_o_nome_do_filme), Toast.LENGTH_SHORT).show()
-                    nameEt.requestFocus()
-                    return@setOnClickListener
-                }
-                setFragmentResult(MOVIE_FRAGMENT_REQUEST_KEY, Bundle().apply {
-                    val year = yearEt.text.toString().toIntOrNull() ?: 0
-                    val studio = studioEt.text.toString()
-                    val minutes = minutesEt.text.toString().toIntOrNull() ?: 0
-                    val score = scoreEt.text.toString().toDouble() ?: 0.0
-                    val watcher = watchedEt.isChecked
 
+        with(fmb) {
+            nameEt.isEnabled = receivedMovie == null
+            setFieldsEnabled(isEditMode)
+            saveBt.visibility = VISIBLE
+            editBt.visibility = if (isEditMode || receivedMovie == null) GONE else VISIBLE
+        }
 
-                    val movie = Movie(name, year, studio, minutes, watcher, score,generaSelection)
-                    putParcelable(
-                        EXTRA_MOVIE, movie
-                    )
-                })
-                findNavController().navigateUp()
+        fmb.editBt.setOnClickListener {
+            fmb.editBt.visibility = GONE
+            fmb.saveBt.visibility = VISIBLE
+            setFieldsEnabled(true)
+        }
+
+        fmb.saveBt.setOnClickListener {
+            val genreSelection = fmb.genreEt.selectedItem.toString()
+            if (genreSelection == getString(R.string.genre)) {
+                Toast.makeText(requireContext(), "Select a valid genre", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            val name = fmb.nameEt.text.toString()
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    getString(R.string.require_movie_name), Toast.LENGTH_SHORT).show()
+                fmb.nameEt.requestFocus()
+                return@setOnClickListener
+            }
+
+            val movieUpdated = Movie(
+                name = name,
+                year = fmb.yearEt.text.toString().toIntOrNull() ?: 0,
+                studio = fmb.studioEt.text.toString(),
+                minutes = fmb.minutesEt.text.toString().toIntOrNull() ?: 0,
+                watched = fmb.watchedEt.isChecked,
+                score = fmb.scoreRb.rating.toDouble(),
+                genre = genreSelection
+            )
+
+            setFragmentResult(MainFragment.MOVIE_FRAGMENT_REQUEST_KEY, Bundle().apply {
+                putParcelable(MainFragment.EXTRA_MOVIE, movieUpdated)
+            })
+
+            findNavController().navigateUp()
         }
 
         return fmb.root
+    }
+
+    private fun setFieldsEnabled(enabled: Boolean) {
+        with(fmb) {
+            listOf(yearEt, studioEt, minutesEt, scoreRb, genreEt, watchedEt).forEach {
+                it.isEnabled = enabled
+            }
+        }
     }
 }

@@ -4,11 +4,9 @@
     <item
         android:id="@+id/remove"
         android:title="@string/remove_movie"
-        android:icon="@drawable/ic_delete"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/details"
         android:title="@string/details"
-        android:icon="@drawable/ic_info"
         app:showAsAction="ifRoom" />
 </menu>

@@ -15,10 +15,9 @@ class MovieAdapter(
 
     inner class MovieViewHolder(val binding: TileMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
+
+
             binding.root.setOnClickListener {
-                listener.onMovieClick(adapterPosition)
-            }
-            binding.root.setOnLongClickListener {
                 val movie = movies[adapterPosition]
                 val popup = PopupMenu(binding.root.context, binding.root)
                 popup.menuInflater.inflate(R.menu.menu_tile, popup.menu)
@@ -29,7 +28,7 @@ class MovieAdapter(
                             true
                         }
                         R.id.details -> {
-                            listener.onEditMovieMenuItemClick(adapterPosition)
+                            listener.onMovieClick(adapterPosition, binding.root)
                             true
                         }
                         else -> false
