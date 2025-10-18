@@ -8,4 +8,19 @@
     <string name="genre">Genre</string>
     <string name="str">\@str</string>
     <string name="unwatched">Unwatched</string>
+    <string name="year">Year</string>
+    <string name="por_favor_preencha_o_nome_do_filme">Por favor, preencha o nome do filme</string>
+    <string name="remove_movie">remove movie</string>
+    <string name="details">Details</string>
+
+    <string-array name="generos">
+        <item>Genre</item>
+        <item>Ação</item>
+        <item>Comédia</item>
+        <item>Drama</item>
+        <item>Terror</item>
+        <item>Romance</item>
+        <item>Ficção Científica</item>
+        <item>Suspense</item>
+    </string-array>
 </resources>

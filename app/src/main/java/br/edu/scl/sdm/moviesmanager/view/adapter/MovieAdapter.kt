@@ -1,54 +1,69 @@
-package br.edu.scl.sdm.moviesmanager.view.adapter
-
-import android.content.Context
-import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.PopupMenu
+import androidx.recyclerview.widget.RecyclerView
 import br.edu.scl.sdm.moviesmanager.R
 import br.edu.scl.sdm.moviesmanager.databinding.TileMovieBinding
 import br.edu.scl.sdm.moviesmanager.model.entity.Movie
+import br.edu.scl.sdm.moviesmanager.view.adapter.OnMovieClickListener
 
-class MovieAdapter (context: Context, private val movieList: MutableList<Movie>) :
-    ArrayAdapter<Movie>(
-        context,
-        R.layout.tile_movie, movieList
-    ) {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val movie = movieList[position]
+class MovieAdapter(
+    private val movies: MutableList<Movie>,
+    private val listener: OnMovieClickListener
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-        var movieTileView = convertView
-        if (movieTileView == null) {
-            val tcb = TileMovieBinding.inflate(
-                context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater, parent, false
-            )
-            movieTileView = tcb.root
-            val tileMovieHolder = TileMovieHolder(tcb.nameTV, tcb.watchedIv)
-            movieTileView.tag = tileMovieHolder
+    inner class MovieViewHolder(val binding: TileMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                listener.onMovieClick(adapterPosition)
+            }
+            binding.root.setOnLongClickListener {
+                val movie = movies[adapterPosition]
+                val popup = PopupMenu(binding.root.context, binding.root)
+                popup.menuInflater.inflate(R.menu.menu_tile, popup.menu)
+                popup.setOnMenuItemClickListener { menuItem ->
+                    when(menuItem.itemId) {
+                        R.id.remove -> {
+                            listener.onRemoveMovieMenuItemClick(adapterPosition)
+                            true
+                        }
+                        R.id.details -> {
+                            listener.onEditMovieMenuItemClick(adapterPosition)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
+                true
+            }
         }
-        val holder = movieTileView.tag as TileMovieHolder
-        holder.nameTv.text = movie.name
+    }
 
-        val watchedIcon = movieTileView.findViewById<ImageView>(R.id.watchedIv)
-        val statusText = movieTileView.findViewById<TextView>(R.id.statusTV)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val binding = TileMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        val movie = movies[position]
+        holder.binding.nameTV.text = movie.name
+        val statusText = holder.binding.statusTV
+        val watchedIcon = holder.binding.watchedIv
 
         if (movie.watched) {
             watchedIcon.setImageResource(R.drawable.ic_check_foreground)
             watchedIcon.setColorFilter(Color.parseColor("#4CAF50"))
+            statusText.text = holder.binding.root.context.getString(R.string.watched)
             statusText.setTextColor(Color.parseColor("#4CAF50"))
         } else {
             watchedIcon.setImageResource(R.drawable.ic_close_foreground)
             watchedIcon.setColorFilter(Color.parseColor("#F44336"))
-            statusText.text = context.getString(R.string.unwatched)
+            statusText.text = holder.binding.root.context.getString(R.string.unwatched)
             statusText.setTextColor(Color.parseColor("#F44336"))
         }
-
-        return movieTileView
     }
 
-    private data class TileMovieHolder(val nameTv: TextView, val watchedIv:ImageView)
+    override fun getItemCount() = movies.size
 }

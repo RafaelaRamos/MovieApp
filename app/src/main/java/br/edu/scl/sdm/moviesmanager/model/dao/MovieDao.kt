@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import br.edu.scl.sdm.moviesmanager.model.entity.Movie
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -14,11 +15,14 @@ interface MovieDao {
         const val MOVIE_TABLE = "movie"
     }
     @Insert
-    fun createMovie(movie: Movie)
-    @Query("SELECT * FROM $MOVIE_TABLE")
-    fun retrieveMovie(): List<Movie>
+    suspend fun createMovie(movie: Movie)
+
+    @Query("SELECT * FROM movie")
+    fun retrieveMovies(): Flow<List<Movie>>
+
     @Update
-    fun updateMovie(movie: Movie)
+    suspend fun updateMovie(movie: Movie)
+
     @Delete
-    fun deleteMovie(movie: Movie)
+    suspend fun deleteMovie(movie: Movie)
 }
